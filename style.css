@@ -1,0 +1,408 @@
+:root {
+    --pink: #ff4d7d;
+    --red: #e11d48;
+    --dark-red: #b70f35;
+    --white: #fff;
+    --bg-gradient: radial-gradient(circle at top, #fff, #ffd1dc, #ff4d7d);
+    --glass-bg: rgba(255, 255, 255, 0.35);
+    --glass-border: rgba(255, 255, 255, 0.6);
+    --glass-blur: blur(8px);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    /* Fallback */
+    height: 100dvh;
+    /* Mobile optimization */
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: var(--bg-gradient);
+    overflow: hidden;
+    overscroll-behavior: none;
+    /* Prevent scroll bounce */
+    user-select: none;
+    /* Prevent text selection */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom Cursor only for devices with a mouse */
+@media (hover: hover) and (pointer: fine) {
+
+    html,
+    body {
+        cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='%23e11d48' stroke='white' stroke-width='2'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") 12 12, auto;
+    }
+}
+
+/* --- Layout Utilities --- */
+.stage {
+    display: none;
+    height: 100%;
+    place-items: center;
+    text-align: center;
+    padding: 24px;
+    width: 100%;
+}
+
+.stage.active {
+    display: grid;
+}
+
+/* --- Typography & Text --- */
+.top-message {
+    margin-bottom: 18px;
+    text-align: center;
+    font-weight: 900;
+    color: var(--dark-red);
+    letter-spacing: 0.4px;
+    text-shadow: 0 14px 35px rgba(225, 29, 72, 0.18);
+}
+
+.top-title {
+    font-size: clamp(22px, 4.5vw, 34px);
+}
+
+.top-countdown {
+    margin-top: 6px;
+    font-size: clamp(13px, 2.6vw, 17px);
+    font-weight: 800;
+    opacity: 0.92;
+}
+
+/* --- Envelope Component --- */
+.envelope {
+    width: min(420px, 85vw);
+    aspect-ratio: 16/10;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    margin: 0 auto;
+}
+
+.env-body {
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    border-radius: 22px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.env-top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 60%;
+    background: #ffd1dc;
+    clip-path: polygon(0 0, 100% 0, 50% 85%);
+    transform-origin: top;
+    transition: transform 0.9s ease;
+    z-index: 2;
+}
+
+.envelope.open .env-top {
+    transform: rotateX(180deg);
+}
+
+.seal {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--white);
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    box-shadow: 0 18px 35px rgba(225, 29, 72, 0.25);
+    z-index: 3;
+}
+
+/* --- Heart & Inputs --- */
+.heart {
+    font-size: 64px;
+    animation: beat 1.2s infinite;
+    display: inline-block;
+}
+
+input {
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(225, 29, 72, 0.25);
+    outline: none;
+    min-width: min(320px, 82vw);
+    font-size: 16px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+input:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.1);
+}
+
+/* --- Buttons --- */
+button {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(var(--pink), var(--red));
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+    touch-action: manipulation;
+    /* Prevent zoom */
+}
+
+button:active {
+    transform: scale(0.96);
+}
+
+button.secondary {
+    background: var(--white);
+    color: var(--red);
+    border: 1px solid rgba(225, 29, 72, 0.25);
+}
+
+/* --- Stages Specifics --- */
+.wait {
+    display: grid;
+    gap: 12px;
+    justify-items: center;
+    padding: 22px 18px;
+    border-radius: 24px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    width: min(680px, 92vw);
+}
+
+.wait h1 {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 48px);
+    line-height: 1.05;
+}
+
+.wait p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: clamp(14px, 2.2vw, 18px);
+    line-height: 1.5;
+}
+
+.wait .mini {
+    opacity: 0.75;
+    font-size: 13px;
+}
+
+.cursor {
+    display: inline-block;
+    width: 0.6ch;
+    margin-left: 2px;
+    border-bottom: 2px solid rgba(225, 29, 72, 0.55);
+    animation: blink 0.9s infinite;
+}
+
+/* --- Final Stage --- */
+.final-card {
+    width: min(760px, 92vw);
+    padding: 22px 18px;
+    border-radius: 26px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+}
+
+.love-counter {
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--glass-border);
+    display: inline-block;
+    font-weight: 800;
+    color: #7a0d2a;
+}
+
+.love-counter small {
+    display: block;
+    font-weight: 700;
+    opacity: 0.75;
+    color: #7a0d2a;
+    font-size: 0.85em;
+}
+
+.signature {
+    margin-top: 18px;
+    font-weight: 900;
+    color: var(--dark-red);
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* --- Feature: Music Button --- */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--red);
+    border: 1px solid rgba(225, 29, 72, 0.2);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    z-index: 100;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.music-btn:active {
+    transform: scale(0.9);
+}
+
+.music-btn.playing {
+    background: var(--red);
+    color: var(--white);
+    animation: pulse-music 2s infinite;
+}
+
+/* --- Toast --- */
+.toast {
+    position: fixed;
+    left: 50%;
+    bottom: 80px;
+    /* Higher to avoid music btn */
+    transform: translateX(-50%);
+    background: rgba(20, 2, 8, 0.85);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    font-weight: 700;
+    font-size: 14px;
+    max-width: min(92vw, 720px);
+    text-align: center;
+    z-index: 99;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* --- Canvas & Touch Layer --- */
+#touchLayer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 50;
+}
+
+.touchHeart {
+    position: absolute;
+    filter: drop-shadow(0 10px 16px rgba(225, 29, 72, 0.25));
+    will-change: transform, opacity;
+    animation: floatHeart 1.15s ease-out forwards;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    display: none;
+    z-index: 1;
+}
+
+canvas.show {
+    display: block;
+}
+
+/* --- Animations --- */
+@keyframes breathe {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.95;
+    }
+
+    50% {
+        transform: translateY(-2px);
+        opacity: 1;
+    }
+}
+
+@keyframes beat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+@keyframes floatHeart {
+    from {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    to {
+        transform: translate(-50%, -110px) scale(1.35);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse-music {
+    0% {
+        box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(225, 29, 72, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(225, 29, 72, 0);
+    }
+}
+
+.breathe {
+    animation: breathe 2.6s ease-in-out infinite;
+}

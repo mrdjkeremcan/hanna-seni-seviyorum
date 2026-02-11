@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<title>For You ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div id="touchLayer" aria-hidden="true"></div>
+
+<!-- ASSETS -->
+<audio id="song" src="music.mp3" loop preload="auto"></audio>
+<audio id="whoosh" src="whoosh.mp3" preload="auto"></audio>
+
+<!-- MUSIC BUTTON -->
+<div class="music-btn" id="musicBtn" role="button" aria-label="Toggle Music">🔈</div>
+
+<!-- STAGE 1: INTRO & ENVELOPE -->
+<section class="stage active" id="s1">
+  <div>
+    <div class="top-message breathe">
+      <div class="top-title">HANNA, I LOVE YOU</div>
+      <div class="top-countdown" id="valCountdown">…</div>
+    </div>
+
+    <div class="envelope" id="env" role="button" tabindex="0" aria-label="Open the envelope">
+      <div class="env-body"></div>
+      <div class="env-top"></div>
+      <div class="seal">❤️</div>
+    </div>
+
+    <p style="margin-top:20px; opacity:0.75;">Tap the envelope</p>
+  </div>
+</section>
+
+<!-- STAGE 2: PASSWORD -->
+<section class="stage" id="s2">
+  <div class="wait">
+    <div class="heart">❤️</div>
+    <h2>Enter password</h2>
+    <input id="pw" type="password" placeholder="password" autocomplete="off"/>
+    <p>Hint: <strong>the place where I always am</strong></p>
+    <button id="unlockBtn">Unlock</button>
+  </div>
+</section>
+
+<!-- STAGE 3: QUESTION -->
+<section class="stage" id="s3">
+  <div>
+    <h1 style="margin:0; font-size:clamp(32px,6vw,56px); color:#b70f35;">Do you love me?</h1>
+    <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:24px;">
+      <button id="yesBtn">YES, I DO! ❤️</button>
+      <button class="secondary" id="noBtn">NO</button>
+    </div>
+  </div>
+</section>
+
+<!-- STAGE 4: TYPING WAIT -->
+<section class="stage" id="s4">
+  <div class="wait" id="waitCard">
+    <div class="heart" aria-hidden="true">❤️</div>
+    <h1>I’ll wait for you.</h1>
+    <p id="type1"></p>
+    <p id="type2"></p>
+    <p id="type3"></p>
+    <div class="mini" style="margin-top:10px">Tap to continue</div>
+  </div>
+</section>
+
+<!-- STAGE 5: FINAL -->
+<section class="stage" id="s5">
+  <div class="final-card">
+    <h1 style="margin:0; font-size:clamp(26px,4.5vw,44px); color:#b70f35; line-height:1.1;" id="finalTitle">
+      I love you too. Happy Valentine’s Day. ❤️
+    </h1>
+
+    <div class="love-counter">
+      <small>Loving you for</small>
+      <span id="counterText">…</span>
+    </div>
+
+    <p style="margin:14px 0 0; line-height:1.55; font-size:clamp(14px,2.2vw,18px); opacity:0.92; text-align:center;">
+      The distance between us doesn't diminish my love for you. On the contrary, it grows stronger every day.
+      I believe that one day, when we are together, all these difficult days will be replaced by happiness.
+    </p>
+
+    <!-- NEW FEATURES -->
+    <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+        <button onclick="showReason()" style="background:var(--white); color:var(--red); border:1px solid #ffccd5;">
+            Why I Love You? 💌
+        </button>
+    </div>
+
+    <div class="signature" id="signature">KEREM & HANNA / 14 Feb 2026</div>
+  </div>
+</section>
+
+<canvas id="fx"></canvas>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
